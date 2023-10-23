@@ -1,0 +1,4 @@
+requests
+Flask
+oyaml
+dotenv

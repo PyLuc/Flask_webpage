@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A simple resume template built with Flask, based on Start Bootstrap resume template.">
+  <meta name="author" content="Lukas Krch">
+
+  <title>Portfolio - {{ data.profile.first_name }} {{ data.profile.last_name }}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/resume.css" rel="stylesheet">
+  <link type="image/png" sizes="96x96" rel="icon" href="static/img/icons8-console-96.png">
+
+</head>
+
+<body id="page-top">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-block d-lg-none text-white subheading">{{ data.profile.first_name }} {{ data.profile.last_name }}</span>
+      <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile"  src="{{ data.profile.picture }}" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#TTS">TTS converter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#certification">Certifications</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/static/CV_Lukas_Krch.pdf" target="_blank">CV</a>
+        </li>
+
+        
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid p-0">
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+      <div class="w-100">
+        <h1 class="mb-0">{{ data.profile.first_name }}
+          <span class="text-primary">{{ data.profile.last_name }}</span>
+        </h1>
+        <div class="subheading mb-5">
+          {% for item in data.profile.contact.values() %}
+          {% if item != None %}
+          {{ item }} ·
+          {% endif %}
+          {% endfor %}
+        </div>
+        <p" class="lead mb-5">    Welcome to my website based on Flask running via <a href="https://www.chess.cz" target="_blank">docker-compose.yml</a>. Look at the navbar, where you can find all important information about me </p>
+        <p class="lead mb-5">I recommend to try my TTS converter based on JoJ Text To Speech API</p>
+        <div class="social-icons">
+        {% for key, value in data.social.items() %}
+        {% if value != None %}
+          <a href="{{ value }}" target="_blank">
+            <i class="fab fa-{{ key }}"></i>
+          </a>
+          
+        {% endif %}
+        {% endfor %}
+        </div>
+        
+      </div>
+     
+    
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="TTS">
+      <div class="w-100">
+      
+    <h3>Text to speech converter</h3>    
+    <h4>Type to play online</h4>
+      <form  action="/speech" method="POST">
+          <textarea name="text" id="text" style=" width: 100%; height: 8rem; word-wrap: break-word; word-break: break-all;"></textarea>
+          <button type="submit" style="display:block;width:6rem;">Execute</button>
+      </form>
+      
+      <audio id="audio" controls style="margin-bottom: 5rem;width: 100% ;">
+          <source id="audio-source" src="" type="audio/mp3">
+      </audio>
+      <script>
+          const form = document.querySelector('form');
+          const audio = document.querySelector('#audio');
+          const audioSource = document.querySelector('#audio-source');
+      
+          form.addEventListener('submit', async (event) => {
+              event.preventDefault();
+              const formData = new FormData(form);
+              const response = await fetch('/speech', {
+                  method: 'POST',
+                  body: formData
+              });
+              const blob = await response.blob();
+              const objectUrl = URL.createObjectURL(blob);
+              audioSource.src = objectUrl;
+              audio.load();
+              audio.play();
+          });
+      </script>
+      
+      <h4>Type to download mp3 file</h4>
+      
+      <form action="/download" method="POST">
+          <textarea name="text" id="text" style="width: 100%; height: 8rem; word-wrap: break-word; word-break: break-all;"></textarea>
+          <button type="submit" style="display:block;width: 6rem; ;">Download</button>
+      </form>
+      
+      
+      
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
+      <div class="w-100">
+        <h3>Programming Languages and Tools</h3>
+        <br>
+        <ul class="list-inline dev-icons">
+          {% for item in data.tools %}
+          <li class="list-inline-item">
+            <i class="fab fa-{{ item }}"></i>
+          </li>
+          {% endfor %}
+        </ul>
+        <br>
+        <h3>Extra skills</h3>
+        <ul class="fa-ul mb-0">
+          {% for item in data.extra_skills %}
+          <li>
+            <i class="fa-li fa fa-check"></i>
+            {{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="certification">
+      <div class="w-100"  >
+        
+        
+        {% for _, item in data.education.items() %}
+        <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+          <div class="resume-content">
+            <div class="subheading mb-3">{{ item.institution }}</div>
+            <h4 class="mb-0">{{ item.program }}</h4>
+            <p>{{ item.gpa }}</p>
+          </div>
+          <div class="resume-date text-md-right">
+            <span class="text-primary">{{ item.passed }}</span>
+          </div>
+        </div>
+         {% endfor %}
+      </div>
+    </section>
+
+    <hr class="m-0">
+    
+    <div class="container">
+    <p class="small float-right">Created in October 2023 by Pyluc</p>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="static/js/resume.min.js"></script>
+  
+</body>
+
+</html>

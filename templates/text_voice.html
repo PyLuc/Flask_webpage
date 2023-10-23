@@ -1,0 +1,39 @@
+
+
+    <h4>Type to play online</h>
+<form  action="/speech" method="POST">
+    <textarea name="text" id="text" style="width: 45rem; height: 8rem; word-wrap: break-word; word-break: break-all;"></textarea>
+    <button type="submit" style="display:block">Execute</button>
+</form>
+
+<audio id="audio" controls style="margin-bottom: 5rem;width: 50rem;">
+    <source id="audio-source" src="" type="audio/mp3">
+</audio>
+<script>
+    const form = document.querySelector('form');
+    const audio = document.querySelector('#audio');
+    const audioSource = document.querySelector('#audio-source');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const response = await fetch('/speech', {
+            method: 'POST',
+            body: formData
+        });
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        audioSource.src = objectUrl;
+        audio.load();
+        audio.play();
+    });
+</script>
+
+<h4>Type to download mp3 file</h4>
+
+<form action="/download" method="POST">
+    <textarea name="text" id="text" style="width: 45rem; height: 8rem; word-wrap: break-word; word-break: break-all;"></textarea>
+    <button type="submit" style="display: block;">Download</button>
+</form>
+
+

@@ -1,0 +1,63 @@
+# Profile section
+profile:
+  first_name: Lukáš
+  last_name: Krch
+  picture:  static/img/Profilovka.jpg
+
+  contact:
+    address_one: 
+    address_two: 
+    phone: 
+  email: 
+  description: 
+
+
+# Social section
+social:
+  linkedin: https://www.linkedin.com/in/luk%C3%A1%C5%A1-krch-57a151274/
+  github: https://github.com/PyLuc
+  linux: 
+  hackerrank: https://www.hackerrank.com/LukasKrch
+  twitter: 
+  facebook:
+  dev: 
+  medium: 
+
+#API section
+
+
+# Education section
+education:
+  item1:
+    institution: ENGETO Linux Academy
+    program: ENGETO Certified Sysadmin
+    passed: July 2023
+  item2:
+    institution: HackerRank
+    program: Python Gold Badge
+    passed: January 2023
+  item3:
+    institution: Cambridge English Language Assessment
+    program: B2 First (FCE)
+    passed: February 2018
+  
+
+
+# Skills section
+tools:
+  # Consider that the following are fa icons:
+  #   https://fontawesome.com/icons?d=gallery&s=brands
+  - linux
+  - python
+  - docker
+  - git
+  - github
+
+extra_skills:
+  - bash scripting
+  - flask
+  - mysql/mariadb
+
+
+
+
